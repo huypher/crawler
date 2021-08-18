@@ -1,6 +1,6 @@
 package frontier
 
-import "crawler/internal/components"
+import "github.com/huypher/crawler/internal/components"
 
 type frontier struct {
 	priorityQueue PriorityQueue
