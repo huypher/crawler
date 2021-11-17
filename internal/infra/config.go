@@ -21,6 +21,7 @@ func ProvideConfig() (*Config, error) {
 
 type Config struct {
 	Rabbitmq Rabbitmq `json:"rabbitmq"`
+	Redis    Redis    `json:"redis"`
 }
 
 type Rabbitmq struct {
@@ -31,4 +32,10 @@ type Rabbitmq struct {
 	DelayExchangeRoutingKey string `json:"delay_exchange_routing_key"`
 
 	QueueName string `json:"queue_name"`
+}
+
+type Redis struct {
+	Addr string `json:"addr"`
+	Pass string `json:"pass"`
+	DB   int    `json:"db"`
 }

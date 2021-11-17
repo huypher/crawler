@@ -3,7 +3,6 @@ package message_queue
 import (
 	"fmt"
 
-	"github.com/huypher/crawler/internal/infra"
 	"github.com/huypher/kit/rabbitmq"
 )
 
@@ -19,11 +18,11 @@ type consumer struct {
 	consumer Consumer
 }
 
-func NewConsumer(cfg *infra.Config, rabbitmqConsumer *RabbitmqConsumer) *consumer {
+func NewConsumer(cfg *Config, rabbitmqConsumer *RabbitmqConsumer) *consumer {
 	c := new(consumer)
 
 	c.consumer = rabbitmqConsumer.RabbitmqConn.CreateConsumer(
-		rabbitmq.QueueName(cfg.Rabbitmq.QueueName),
+		rabbitmq.QueueName(cfg.QueueName),
 		rabbitmq.PriorityQueue(priorityRange),
 		rabbitmq.RegisterHandlerFunc(handler),
 	)

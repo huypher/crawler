@@ -1,31 +1,20 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-	"io"
-	"net/http"
+	"context"
+
+	"github.com/huypher/crawler/internal/infra/app"
 )
 
 func main() {
-	url := "https://voz.vn"
-	fmt.Println("Downloading ", url)
-
-	resp, err := http.Get(url)
+	application, cleanup, err := app.InitApplication(context.Background())
 	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-	defer resp.Body.Close()
-
-	buf := bytes.NewBuffer(make([]byte, 0))
-
-	_, err = io.Copy(buf, resp.Body)
-	if err != nil {
-		fmt.Println(err.Error())
+		panic(err)
 	}
 
-	fmt.Println(buf.String())
+	defer func() {
+		cleanup()
+	}()
 
-	return
+	application.Run()
 }

@@ -3,7 +3,6 @@ package message_queue
 import (
 	"encoding/json"
 
-	"github.com/huypher/crawler/internal/infra"
 	"github.com/huypher/kit/rabbitmq"
 )
 
@@ -34,12 +33,12 @@ type priorityProducer struct {
 	producer PriorityProducer
 }
 
-func NewPriorityProducer(cfg *infra.Config, rabbitmqProducer *RabbitmqProducer) *priorityProducer {
+func NewPriorityProducer(cfg *Config, rabbitmqProducer *RabbitmqProducer) *priorityProducer {
 	p := new(priorityProducer)
 
 	p.producer = rabbitmqProducer.RabbitmqConn.CreateProducer(
-		rabbitmq.ExchangeName(cfg.Rabbitmq.DelayExchangeName),
-		rabbitmq.ExchangeKind(rabbitmq.ExchangeType(cfg.Rabbitmq.DelayExchangeType)),
+		rabbitmq.ExchangeName(cfg.DelayExchangeName),
+		rabbitmq.ExchangeKind(rabbitmq.ExchangeType(cfg.DelayExchangeType)),
 		rabbitmq.RegisterMarshalFunc(json.Marshal),
 	)
 

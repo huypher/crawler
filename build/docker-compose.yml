@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  crawler:
+    build:
+      context: ..
+      dockerfile: ./build/Dockerfile
+    ports:
+     - "8080:8080"
+#    command: ["./app",  "serve"]
+    command: ["./app",  "crawl"]
+#    command: ["./app",  "ws-serve"]
+    env_file:
+      - .env
+  redis:
+    image: redis:5.0.7-alpine
+    ports:
+      - "6379:6379"
